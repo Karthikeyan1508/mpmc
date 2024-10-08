@@ -1,0 +1,46 @@
+.MODEL SMALL
+.DATA
+    N DW 6
+    R DW 2
+    NCR DW 0
+
+.CODE
+    MOV AX, @DATA
+    MOV DS, AX
+    MOV AX, N
+    MOV BX, R
+    CALL NCR_PROC
+    MOV AH, 4CH
+    INT 21H
+
+NCR_PROC PROC
+    CMP AX, BX
+    JZ N1
+    CMP BX, 0
+    JZ N1
+    CMP BX, 1
+    JZ N2
+    MOV CX, AX
+    DEC CX
+    CMP CX, BX
+    JZ N2
+    PUSH AX
+    PUSH BX
+    DEC AX
+    CALL NCR_PROC
+    POP BX
+    POP AX
+    DEC AX
+    DEC BX
+    CALL NCR_PROC
+    JMP LAST
+
+N1: ADD NCR, 1
+    RET
+
+N2: ADD NCR, AX
+    RET
+
+LAST: RET
+NCR_PROC ENDP
+END
