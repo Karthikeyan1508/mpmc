@@ -1,6 +1,6 @@
 ;data-transfer
 
-AREA PROG1, CODE, READONLY
+    AREA PROG1, CODE, READONLY
     ENTRY
 START
     LDR R2,=0X05
